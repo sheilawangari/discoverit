@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# This file is part of the Toolforge flask WSGI tutorial
+# This file is part of the Toolforge Flask + OAuth WSGI tutorial
 #
 # Copyright (C) 2017 Bryan Davis and contributors
 #
@@ -18,11 +18,19 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import flask
+import os
+import yaml
 
 
 app = flask.Flask(__name__)
 
 
+# Load configuration from YAML file
+__dir__ = os.path.dirname(__file__)
+app.config.update(
+          yaml.safe_load(open(os.path.join(__dir__, 'config.yaml'))))
+
+
 @app.route('/')
 def index():
-      return 'Hello World!'
+          return app.config['GREETING']
